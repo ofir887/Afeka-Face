@@ -1,0 +1,16 @@
+<!--<form (ngSubmit)="friendsForm.form.valid" #postForm="ngForm">-->
+
+  <table border="3"><tr><td>
+    <center><h3><i>Afeka-Face users</i></h3></center>
+    <br>
+      <input style="height:40px;" name="search" size="35" id="searchText" type="text" placeholder="search..." [(ngModel)]="searchText" />
+       <!--<button type="submit">addFriend</button>-->
+<!--</form> -->
+<ul>
+  <h3>
+  <li *ngFor="let user of friendsdb | async | friends:searchText:currentUser">
+   <a href="javascript:;" (click)="addFriend(user.$key)">{{user.name}}</a>
+  </li></h3>
+ 
+</ul>
+</td></tr></table>

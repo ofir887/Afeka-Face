@@ -1,0 +1,68 @@
+<script>
+function centerModal() {
+    $(this).css('display', 'block');
+    var $dialog = $(this).find(".modal-dialog");
+    var offset = ($(window).height() - $dialog.height()) / 2;
+    // Center modal vertically in window
+    $dialog.css("margin-top", offset);
+}
+
+$('.modal').on('show.bs.modal', centerModal);
+$(window).on("resize", function () {
+    $('.modal:visible').each(centerModal);
+});
+</script>
+<center><h2 >Hello {{(currentUser | async)?.name}}, How are you today?</h2></center>
+  <friends  ></friends>
+<center>
+    <br>
+<table border="3">
+    <tr><td>
+<form (ngSubmit)="postForm.form.valid && createPost()" #postForm="ngForm">
+
+    <center><h1>{{newPost.title}}</h1></center>
+    <input style="height:40px;" type="text" placeholder="What's on your mind?" required [(ngModel)]="newPost.description" ngControl="description"
+        [ngModelOptions]="{standalone: true}" size="50">
+    <h4><input type="checkbox" [(ngModel)]="newPost.isPublic" [ngModelOptions]="{standalone: true}">Post this as public?<br></h4>
+    <input type="file" (change)="handleMultipleUpload($event)" multiple/><br>
+    <center><button style="height:40px;" type="submit">Add post</button></center>
+
+</form>
+</td></tr></table>
+</center>
+<br>
+
+<ul>
+    <div *ngFor="let post of posts | async">
+        <div *ngIf="post.isPublic || currentUserUid== post.userId">
+             <table style="width:50%" border="3">
+               <tr><td>
+               <h3>{{ post.title }} posted: {{post.description}}</h3>
+                <div id= "loopphotos" *ngFor="let photo of post.photos">
+                 <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"> 
+                      <img width="100px" [src]="photo" (click)="putImage(photo)"></a>
+                </div>
+                <div *ngIf="currentUserUid== post.userId">
+                    <h4><input type="checkbox" (change)="changePost(post,post.$key)" [(ngModel)]="post.isPublic" [ngModelOptions]="{standalone: true}">Post this as public?</h4>
+
+                </div>
+                <like [postid]="post.$key"></like>
+                <comment  [postid]="post.$key"></comment>
+                <div *ngIf="currentUserUid== post.userId">
+                <button style="height:40px;" (click)="deletePost(post.$key)">Delete Post</button>
+                </div>
+                </td></tr></table>
+            <br>
+        </div>
+    </div>
+</ul>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <img [src]="modalImg" class="img-responsive">
+        </div>
+    </div>
+  </div>
+</div>
+ <center><button  (click)="logOut()" style="width:200px; height:40px;"> LogOut</button></center>

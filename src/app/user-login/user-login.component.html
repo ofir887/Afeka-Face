@@ -1,0 +1,36 @@
+<section class="login-component">
+  <div class="container">
+    <div class="card">
+      <div class="row">
+        <div class="col s5 push-s5">
+          <h4 >Login</h4>
+        </div>
+      </div>
+      <div class="card-image waves-effect waves-block waves-light">
+        <div class="row">
+          <form class="container">
+            <div class="row">
+              <div class="input-field">
+                 <label for="email">Email</label>
+                <input id="email" name = "email" type="email" class="validate" [(ngModel)]="user.email">
+               
+              </div>
+             </div>
+             <div class="row"> 
+              <div class="input-field">
+                <label for="password">Password</label>
+                <input id="password" name= "password" type="password" class="validate" [(ngModel)]="user.password">
+                
+              </div>
+            </div>
+            <div class="row">
+              <p>
+                <button (click)="login()">Login</button>
+              </p>
+            </div>
+           </form>
+         </div>
+      </div>      
+    </div>            
+  </div>  
+</section>

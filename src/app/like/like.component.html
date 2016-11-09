@@ -1,0 +1,5 @@
+ <div >
+                    <div>
+                        <p *ngIf="howMany>0">{{howMany}} People Liked this Post!</p>
+                   <h4> <input type="checkbox" (change)="changeLike()" [(ngModel)]="islike" [ngModelOptions]="{standalone: true}">Like this post?</h4><br>
+                </div>
